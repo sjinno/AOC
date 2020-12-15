@@ -14,4 +14,7 @@ fn main() {
     if let Err(e) = day2::password_philosophy() {
         println!("Error occured: {}.", e.to_string());
     }
+    if let Err(e) = day2::part_2() {
+        println!("Error occured: {}.", e.to_string());
+    }
 }

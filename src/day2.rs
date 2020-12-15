@@ -30,6 +30,7 @@ pub fn password_philosophy() -> std::io::Result<()> {
     for line in reader.lines() {
         let data = line.unwrap();
         let split_data: Vec<&str> = data.split(' ').collect();
+        
         if split_data.len() == 1 {
             break;
         }
@@ -37,19 +38,9 @@ pub fn password_philosophy() -> std::io::Result<()> {
         let range: Vec<&str> = split_data[0].split('-').collect();
         let lower_bound = range[0].parse::<i32>().unwrap() - 1;
         let upper_bound = range[1].parse::<i32>().unwrap() + 1;
-        // ----- DEBUGGING -----
-        // println!("{}, {}", lower_bound, upper_bound);
-        // let target_char: Vec<&str> = split_data[1].split(':').collect();
-        // let mut target_char = split_data[1].chars();
-        // target_char.next();
-        // println!("{:?}", target_char.as_str());
-        // -----    END    -----
         let target_char = split_data[1].chars().next().unwrap();
-        // println!("{}", target_char);
-
         let password = split_data[2];
-        // println!("{}", password);
-
+        
         let mut char_count = 0;
         for c in password.chars() {
             if c == target_char {
@@ -62,6 +53,51 @@ pub fn password_philosophy() -> std::io::Result<()> {
         }
     }
 
-    println!("{}", count); // Print the number of valid passwords.
+    println!("Answer for part 1: {}.", count); // Print the number of valid passwords.
     Ok(())
+}
+
+pub fn part_2() -> std::io::Result<()> {
+    let filename = "files/passwords.txt";
+    let file = File::open(filename)?;
+    let reader = BufReader::new(file);
+
+    let mut count = 0;
+    for line in reader.lines() {
+        let data = line.unwrap();
+        let split_data: Vec<&str> = data.split(' ').collect();
+        
+        if split_data.len() == 1 {
+            break;
+        }
+
+        let range: Vec<&str> = split_data[0].split('-').collect();
+        let idx_of_first_char = range[0].parse::<i32>().unwrap() - 1;
+        let idx_of_second_char = range[1].parse::<i32>().unwrap() - 1;
+        let target_char = split_data[1].chars().next().unwrap();
+        let password = split_data[2];
+
+        if validate_password(target_char, password, idx_of_first_char, idx_of_second_char) {
+            count += 1;
+        }
+    }
+
+    println!("Answer for part 2: {}.", count);
+    Ok(())
+}
+
+fn validate_password(target: char, password: &str, first: i32, second: i32) -> bool {
+    if password.chars().nth(first as usize).unwrap() == target
+        && password.chars().nth(second as usize).unwrap() != target
+    {
+        return true;
+    }
+
+    if password.chars().nth(first as usize).unwrap() != target
+        && password.chars().nth(second as usize).unwrap() == target
+    {
+        return true;
+    }
+
+    false
 }
