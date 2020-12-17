@@ -1,5 +1,6 @@
 // mod day1;
-mod day2;
+// mod day2;
+mod day3;
 
 fn main() {
     // // DAY 1
@@ -10,11 +11,16 @@ fn main() {
     //     println!("Error occured: {}.", e.to_string());
     // }
 
-    // DAY 2
-    if let Err(e) = day2::password_philosophy() {
-        println!("Error occured: {}.", e.to_string());
-    }
-    if let Err(e) = day2::part_2() {
+    // // DAY 2
+    // if let Err(e) = day2::password_philosophy() {
+    //     println!("Error occured: {}.", e.to_string());
+    // }
+    // if let Err(e) = day2::part_2() {
+    //     println!("Error occured: {}.", e.to_string());
+    // }
+
+    // DAY 3
+    if let Err(e) = day3::part_1() {
         println!("Error occured: {}.", e.to_string());
     }
 }
