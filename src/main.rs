@@ -46,10 +46,10 @@ fn main() {
     //     println!("Error occured: {}.", e.to_string());
     // }
     // Day 6
-    if let Err(e) = day6::part1() {
-        println!("Error occured: {}.", e.to_string());
-    }
-    // if let Err(e) = day6::part2() {
+    // if let Err(e) = day6::part1() {
     //     println!("Error occured: {}.", e.to_string());
     // }
+    if let Err(e) = day6::part2() {
+        println!("Error occured: {}.", e.to_string());
+    }
 }

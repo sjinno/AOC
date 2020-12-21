@@ -22,11 +22,7 @@ pub fn part1() -> std::io::Result<()> {
     // let filename = "files/day6_example.txt";
     let contents = read_txt(filename)?;
     let cleaned_input = clean_input(contents);
-    // printf!(cleaned_input);
     let groups: Vec<&str> = cleaned_input.split("\n\n").collect();
-    // printd!(groups);
-    // printf!(groups.len());
-    // let mut g_count = 0;
     let mut num_of_questions = 0;
     let mut hs: HashSet<char> = HashSet::new();
     for g in groups {
@@ -40,6 +36,35 @@ pub fn part1() -> std::io::Result<()> {
         hs.clear();
     }
     printf!(num_of_questions);
-    // printf!(g_count);
+    Ok(())
+}
+
+// #![feature(hash_drain_filter)]
+pub fn part2() -> std::io::Result<()> {
+    let filename = "files/day6.txt";
+    // let filename = "files/day6_example.txt";
+    let contents = read_txt(filename)?;
+    let cleaned_input = clean_input(contents);
+    let groups: Vec<&str> = cleaned_input.split("\n\n").collect();
+    let mut total = 0;
+    let mut first = true;
+    let mut hs: HashSet<char> = HashSet::new();
+    for group in groups {
+        let persons = group.split("\n").collect::<Vec<&str>>();
+        for person in persons {
+            if first {
+                first = false;
+                for yes in person.chars() {
+                    hs.insert(yes);
+                }
+                continue;
+            }
+            hs = hs.into_iter().filter(|x| person.contains(*x)).collect();
+        }
+        total += hs.len();
+        first = true;
+        hs.clear();
+    }
+    printf!(total);
     Ok(())
 }
