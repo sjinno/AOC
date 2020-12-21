@@ -41,4 +41,7 @@ fn main() {
     if let Err(e) = day5::part1() {
         println!("Error occured: {}.", e.to_string());
     }
+    if let Err(e) = day5::part2() {
+        println!("Error occured: {}.", e.to_string());
+    }
 }

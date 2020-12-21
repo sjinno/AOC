@@ -1,4 +1,5 @@
 use crate::reader::{clean_input, read_txt};
+use std::collections::HashSet;
 
 #[allow(unused_macros)]
 // Debug format.
@@ -93,4 +94,42 @@ fn get_id(seat: &str) -> u32 {
     // println!("{}", col);
 
     row * 8 + col
+}
+
+pub fn part2() -> std::io::Result<()> {
+    let filename = "files/day5.txt";
+    let lines = read_txt(filename)?;
+    let mut my_list: HashSet<u32> = HashSet::new();
+    let mut seats_taken: HashSet<u32> = HashSet::new();
+    let mut highest = 0;
+    let mut lowest = 0;
+    let mut get_lowest = true;
+    for seat in &lines {
+        let id = get_id(&seat);
+        if get_lowest {
+            get_lowest = false;
+            lowest = id;
+        }
+        if highest < id {
+            highest = id;
+        } else if lowest > id {
+            lowest = id;
+        }
+        seats_taken.insert(id);
+        my_list.insert(id + 1);
+        my_list.insert(id - 1);
+    }
+
+    // printf!(highest);
+    // printf!(lowest);
+
+    for x in my_list.iter() {
+        if x < &lowest || x > &highest {
+            continue;
+        }
+        if !seats_taken.contains(x) {
+            printf!(x);
+        }
+    }
+    Ok(())
 }
